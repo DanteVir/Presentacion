@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta para Luz Helena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        .handwriting {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .elegant {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .floating:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .floating:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .sparkle {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .paper-texture {
+            background: linear-gradient(135deg, #fef9e7 0%, #fcf3cf 100%);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 p-4 elegant">
+    <!-- Decorative elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="floating absolute top-20 left-10 text-pink-300 text-4xl">🌸</div>
+        <div class="floating absolute top-32 right-20 text-purple-300 text-3xl">✨</div>
+        <div class="floating absolute top-60 left-1/4 text-blue-300 text-2xl">🦋</div>
+        <div class="floating absolute bottom-40 right-10 text-green-300 text-3xl">🌺</div>
+        <div class="floating absolute bottom-60 left-16 text-yellow-300 text-2xl">⭐</div>
+        <div class="floating absolute top-1/2 right-1/3 text-pink-300 text-2xl">💫</div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+        <!-- Header with name -->
+        <div class="text-center mb-8">
+            <h1 class="handwriting text-6xl md:text-8xl gradient-text font-bold mb-4">
+                Para Luz Helena
+            </h1>
+            <div class="flex justify-center items-center space-x-2 text-2xl">
+                <span class="sparkle">🌟</span>
+                <span class="elegant text-purple-600 font-medium">Una maestra extraordinaria</span>
+                <span class="sparkle">🌟</span>
+            </div>
+        </div>
+
+        <!-- Main card -->
+        <div class="paper-texture rounded-3xl p-8 md:p-12 border-4 border-white shadow-2xl relative overflow-hidden">
+            <!-- Decorative corner elements -->
+            <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-pink-200 to-purple-200 rounded-br-full opacity-50"></div>
+            <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-blue-200 to-green-200 rounded-bl-full opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-yellow-200 to-orange-200 rounded-tr-full opacity-50"></div>
+            <div class="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-purple-200 to-pink-200 rounded-tl-full opacity-50"></div>
+
+            <!-- Letter content -->
+            <div class="relative z-10">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">👩‍🏫</div>
+                    <h2 class="handwriting text-4xl text-purple-700 font-semibold">Querida Luz Helena</h2>
+                </div>
+
+                <div class="space-y-6 text-gray-700 leading-relaxed">
+                    <p class="text-lg md:text-xl text-center handwriting text-2xl text-purple-600">
+                        Eres una luz brillante en el mundo de la educación infantil ✨
+                    </p>
+
+                    <div class="bg-white/70 rounded-2xl p-6 border-l-4 border-pink-400">
+                        <p class="text-base md:text-lg">
+                            Tu dedicación y amor por enseñar a los más pequeños es verdaderamente inspiradora. 
+                            Cada día, con tu paciencia infinita y tu corazón generoso, ayudas a formar las mentes 
+                            del futuro y siembras semillas de conocimiento que crecerán para siempre.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-6 text-center">
+                            <div class="text-4xl mb-3">🎨</div>
+                            <h3 class="handwriting text-2xl text-purple-700 font-semibold mb-2">Creatividad</h3>
+                            <p class="text-sm">Transformas cada lección en una aventura mágica llena de colores y diversión.</p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-blue-100 to-green-100 rounded-2xl p-6 text-center">
+                            <div class="text-4xl mb-3">💝</div>
+                            <h3 class="handwriting text-2xl text-green-700 font-semibold mb-2">Amor</h3>
+                            <p class="text-sm">Tu cariño genuino hace que cada niño se sienta especial y valorado.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/70 rounded-2xl p-6 border-l-4 border-blue-400">
+                        <p class="text-base md:text-lg">
+                            Gracias por ser esa maestra que marca la diferencia, por tu sonrisa que ilumina 
+                            cada mañana y por creer en el potencial infinito de cada pequeño corazón que 
+                            tienes el privilegio de guiar. 🌈
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-pink-200 to-purple-200 rounded-full px-6 py-3">
+                            <span class="text-2xl">🏆</span>
+                            <span class="handwriting text-2xl text-purple-700 font-semibold">Eres increíble</span>
+                            <span class="text-2xl">🏆</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signature area -->
+                <div class="mt-12 text-center">
+                    <div class="handwriting text-3xl text-purple-600 mb-4">
+                        Con admiración y cariño 💕
+                    </div>
+                    <div class="flex justify-center space-x-4 text-3xl">
+                        <span class="sparkle">🌸</span>
+                        <span class="sparkle">🦋</span>
+                        <span class="sparkle">🌟</span>
+                        <span class="sparkle">💖</span>
+                        <span class="sparkle">🌺</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer message -->
+        <div class="text-center mt-8">
+            <p class="handwriting text-2xl text-purple-600">
+                Que tengas un día tan hermoso como tu alma de maestra 🌻
+            </p>
+        </div>
+    </div>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9758638b434f50fd',t:'MTc1NjI2NDM2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
