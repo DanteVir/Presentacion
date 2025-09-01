@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUPONERA LUZ - Raspa y Gana</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@400;600;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcf7f, #4ecdc4);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .scratch-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .scratch-area {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .hidden-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .coupon-text {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .scratch-surface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #c0c0c0, #e0e0e0);
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            user-select: none;
+        }
+
+        .scratch-surface:active {
+            cursor: grabbing;
+        }
+
+        .instructions {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .reset-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-size: 1rem;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #ffd93d;
+            font-size: 1.5rem;
+            animation: sparkle 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 480px) {
+            .title { font-size: 2rem; }
+            .scratch-area { width: 250px; height: 160px; }
+            .coupon-text { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scratch-card">
+        <h1 class="title">CUPONERA LUZ</h1>
+        <p class="subtitle">¡Raspa y descubre tu premio!</p>
+        
+        <div class="instructions">
+            Usa tu dedo o mouse para raspar la superficie plateada
+        </div>
+        
+        <div class="scratch-area" id="scratchArea">
+            <div class="hidden-content">
+                <div class="coupon-text">
+                    🎉 ¡CUPÓN VÁLIDO! 🎉<br>
+                    Para una cita especial<br>
+                    el día que vengas ❤️
+                </div>
+            </div>
+            <canvas class="scratch-surface" id="scratchCanvas" width="300" height="200">
+                Raspa aquí para revelar tu premio
+            </canvas>
+        </div>
+        
+        <button class="reset-btn" onclick="resetScratch()">Raspar de nuevo</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('scratchCanvas');
+        const ctx = canvas.getContext('2d');
+        let isScratching = false;
+        let scratchedPercentage = 0;
+
+        // Configurar el canvas
+        function setupCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            
+            // Crear superficie plateada con texto
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#e0e0e0');
+            gradient.addColorStop(0.5, '#c0c0c0');
+            gradient.addColorStop(1, '#a0a0a0');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Agregar texto
+            ctx.fillStyle = '#666';
+            ctx.font = 'bold 16px Poppins';
+            ctx.textAlign = 'center';
+            ctx.fillText('Raspa aquí para', canvas.width/2, canvas.height/2 - 10);
+            ctx.fillText('revelar tu premio', canvas.width/2, canvas.height/2 + 15);
+        }
+
+        // Función para raspar
+        function scratch(e) {
+            if (!isScratching) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Calcular porcentaje raspado
+            calculateScratchedArea();
+            
+            // Crear efecto de brillo
+            createSparkle(e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY);
+        }
+
+        // Calcular área raspada
+        function calculateScratchedArea() {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            let transparent = 0;
+            
+            for (let i = 3; i < pixels.length; i += 4) {
+                if (pixels[i] === 0) transparent++;
+            }
+            
+            scratchedPercentage = (transparent / (pixels.length / 4)) * 100;
+            
+            // Si se ha raspado más del 60%, revelar completamente
+            if (scratchedPercentage > 60) {
+                canvas.style.opacity = '0';
+                canvas.style.transition = 'opacity 0.5s ease';
+            }
+        }
+
+        // Crear efecto de brillo
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = '✨';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.position = 'fixed';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.zIndex = '1000';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                document.body.removeChild(sparkle);
+            }, 2000);
+        }
+
+        // Event listeners para mouse
+        canvas.addEventListener('mousedown', (e) => {
+            isScratching = true;
+            scratch(e);
+        });
+
+        canvas.addEventListener('mousemove', scratch);
+
+        canvas.addEventListener('mouseup', () => {
+            isScratching = false;
+        });
+
+        // Event listeners para touch
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            isScratching = true;
+            scratch(e);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            scratch(e);
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            isScratching = false;
+        });
+
+        // Función para resetear
+        function resetScratch() {
+            canvas.style.opacity = '1';
+            canvas.style.transition = 'none';
+            scratchedPercentage = 0;
+            setupCanvas();
+        }
+
+        // Inicializar
+        setupCanvas();
+
+        // Redimensionar canvas si cambia el tamaño de ventana
+        window.addEventListener('resize', setupCanvas);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978115f6f2bedb15',t:'MTc1NjY5MTEwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
